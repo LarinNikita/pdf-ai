@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 
 import { cn } from '@/lib/utils'
 
+import Providers from '@/providers'
+
 import './globals.css'
 
 import Navbar from '@/components/Navbar'
@@ -24,15 +26,17 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={cn(
-                    'grainy min-h-screen font-sans antialiased',
-                    inter.className,
-                )}
-            >
-                <Navbar />
-                {children}
-            </body>
+            <Providers>
+                <body
+                    className={cn(
+                        'grainy min-h-screen font-sans antialiased',
+                        inter.className,
+                    )}
+                >
+                    <Navbar />
+                    {children}
+                </body>
+            </Providers>
         </html>
     )
 }
