@@ -1,6 +1,9 @@
 import { redirect } from 'next/navigation'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+
 import { db } from '@/db'
+
+import Dashboard from '@/components/Dashboard'
 
 export default async function Page() {
     const { getUser } = getKindeServerSession()
@@ -16,9 +19,5 @@ export default async function Page() {
 
     if (!existingUser) redirect('/auth-callback?origin=dashboard')
 
-    return (
-        <div>
-            <h1>{user?.email}</h1>
-        </div>
-    )
+    return <Dashboard />
 }
