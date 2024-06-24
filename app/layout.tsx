@@ -8,6 +8,7 @@ import Providers from '@/providers'
 import './globals.css'
 
 import Navbar from '@/components/Navbar'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({
                         inter.className,
                     )}
                 >
+                    <Toaster />
                     <Navbar />
                     {children}
                 </body>
