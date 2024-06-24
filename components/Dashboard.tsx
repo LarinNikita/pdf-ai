@@ -1,20 +1,38 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 
 import Link from 'next/link'
-import { Ghost, MessageSquare, Plus, Trash } from 'lucide-react'
 import { format } from 'date-fns'
+import { Ghost, Loader2, MessageSquare, Plus, Trash } from 'lucide-react'
 
 import { trpc } from '@/app/_trpc/client'
 
 import UploadButton from './UploadButton'
 
-import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from './ui/button'
 
+import { Skeleton } from '@/components/ui/skeleton'
+
 const Dashboard = () => {
+    const utils = trpc.useUtils()
+
+    const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<
+        string | null
+    >(null)
+
     const { data: files, isLoading } = trpc.getUserFiles.useQuery()
+    const { mutate: deleteFile } = trpc.deleteFile.useMutation({
+        onSuccess: () => {
+            utils.getUserFiles.invalidate()
+        },
+        onMutate({ id }) {
+            setCurrentlyDeletingFile(id)
+        },
+        onSettled() {
+            setCurrentlyDeletingFile(null)
+        },
+    })
 
     return (
         <main className="mx-auto max-w-7xl md:p-10">
@@ -65,11 +83,18 @@ const Dashboard = () => {
                                         mocked
                                     </div>
                                     <Button
+                                        onClick={() =>
+                                            deleteFile({ id: file.id })
+                                        }
                                         size="sm"
                                         variant="destructive"
                                         className="w-full"
                                     >
-                                        <Trash className="size-4" />
+                                        {currentlyDeletingFile === file.id ? (
+                                            <Loader2 className="size-4 animate-spin" />
+                                        ) : (
+                                            <Trash className="size-4" />
+                                        )}
                                     </Button>
                                 </div>
                             </li>
