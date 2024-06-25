@@ -3,7 +3,7 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 import { db } from '@/db'
 import PdfRender from '@/components/PdfRender'
-import ChatWrapper from '@/components/ChatWrapper'
+import ChatWrapper from '@/components/chat/ChatWrapper'
 
 interface PageProps {
     params: {
@@ -39,7 +39,7 @@ export default async function Page({ params }: PageProps) {
                     </div>
                 </div>
                 <div className="flex-[0.75] shrink-0 border-b border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
-                    <ChatWrapper />
+                    <ChatWrapper fileId={file.id} />
                 </div>
             </div>
         </div>
