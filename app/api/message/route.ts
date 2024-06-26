@@ -40,10 +40,10 @@ export const POST = async (req: NextResponse) => {
     })
 
     // vectorized message
-    const pineconeIndex = pinecone.Index('ai')
+    const pineconeIndex = pinecone.Index('pdfai')
 
     const embeddings = new OllamaEmbeddings({
-        model: 'mxbai-embed-large',
+        model: 'llama3',
     })
 
     const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {

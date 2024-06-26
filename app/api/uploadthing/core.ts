@@ -44,10 +44,10 @@ export const ourFileRouter = {
 
                 const pagesAmt = pageLevelDocs.length //for subscription plan
 
-                const pineconeIndex = pinecone.Index('ai')
+                const pineconeIndex = pinecone.Index('pdfai')
 
                 const embeddings = new OllamaEmbeddings({
-                    model: 'mxbai-embed-large',
+                    model: 'llama3',
                 })
 
                 await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
