@@ -9,6 +9,7 @@ import { trpc } from '@/app/_trpc/client'
 
 import Messages from './Messages'
 import ChatInput from './ChatInput'
+import { ChatContextProvider } from './ChatContext'
 
 import { buttonVariants } from '../ui/button'
 
@@ -104,12 +105,14 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
         )
 
     return (
-        <div className="relative flex min-h-full flex-col justify-between gap-2 divide-y divide-zinc-200 bg-zinc-50">
-            <div className="mb-28 flex flex-1 flex-col justify-between">
-                <Messages />
+        <ChatContextProvider fileId={fileId}>
+            <div className="relative flex min-h-full flex-col justify-between gap-2 divide-y divide-zinc-200 bg-zinc-50">
+                <div className="mb-28 flex flex-1 flex-col justify-between">
+                    <Messages />
+                </div>
+                <ChatInput />
             </div>
-            <ChatInput />
-        </div>
+        </ChatContextProvider>
     )
 }
 

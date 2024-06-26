@@ -1,13 +1,12 @@
+import { PineconeStore } from '@langchain/pinecone'
 import { createUploadthing, type FileRouter } from 'uploadthing/next'
+import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
+import { OllamaEmbeddings } from '@langchain/community/embeddings/ollama'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 import { db } from '@/db'
 
-import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
 import { pinecone } from '@/lib/pinocone'
-import { OpenAIEmbeddings } from '@langchain/openai'
-import { OllamaEmbeddings } from '@langchain/community/embeddings/ollama'
-import { PineconeStore } from '@langchain/pinecone'
 
 const f = createUploadthing()
 
