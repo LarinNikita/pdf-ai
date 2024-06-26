@@ -45,7 +45,6 @@ const ChatInput = ({ isDisabled }: ChatInputProps) => {
                             <Button
                                 disabled={isLoading || isDisabled}
                                 aria-label="send message"
-                                type="submit"
                                 onClick={() => {
                                     addMessage()
 
