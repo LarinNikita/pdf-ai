@@ -215,7 +215,7 @@ export default async function Page() {
                                                     href={
                                                         user
                                                             ? '/dashboard'
-                                                            : '/sign-in'
+                                                            : '/Sign in'
                                                     }
                                                     className={buttonVariants({
                                                         className: 'w-full',
@@ -224,7 +224,7 @@ export default async function Page() {
                                                 >
                                                     {user
                                                         ? 'Got to dashboard'
-                                                        : 'Sign in'}
+                                                        : 'Sign up'}
                                                     <ArrowRight className="ml-1.5 size-5" />
                                                 </Link>
                                             ) : user ? (
