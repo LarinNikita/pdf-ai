@@ -9,6 +9,7 @@ import {
     RegisterLink,
 } from '@kinde-oss/kinde-auth-nextjs/components'
 
+import MobileNav from './MobileNav'
 import UserAccountNav from './UserAccountNav'
 import MaxWidthWrapper from './MaxWidthWrapper'
 
@@ -24,7 +25,7 @@ const Navbar = async () => {
                 <div className="flex h-14 items-center justify-between border-b border-zinc-200">
                     <Link href="/" className="z-40 flex">
                         <Image
-                            src="/logo.png"
+                            src="/favicon.ico"
                             alt="logo"
                             width={24}
                             height={24}
@@ -32,7 +33,7 @@ const Navbar = async () => {
                         />
                         <span className="font-semibold">Iris</span>
                     </Link>
-                    {/* TODO: mobile navbar */}
+                    <MobileNav isAuth={!!user} />
                     <div className="hidden items-center space-x-4 sm:flex">
                         {!user ? (
                             <>
