@@ -16,7 +16,6 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
     title: 'IRIS',
     description: 'Assistant in working with PDF documents',
-    icons: '/favicon.ico',
 }
 
 export default function RootLayout({
