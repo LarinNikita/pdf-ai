@@ -2,11 +2,13 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
-import { INFINITE_QUERY_LIMIT } from '@/constants'
+import { INFINITE_QUERY_LIMIT, PLANS } from '@/constants'
 
 import { db } from '@/db'
 
 import { privateProcedure, publicProcedure, router } from './trpc'
+import { absoluteUrl } from '@/lib/utils'
+import { getUserSubscriptionPlan, stripe } from '@/lib/stripe'
 
 export const appRouter = router({
     authCallback: publicProcedure.query(async () => {
@@ -143,6 +145,52 @@ export const appRouter = router({
 
             return file
         }),
+    createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
+        const { userId } = ctx
+
+        const billingUrl = absoluteUrl('/dashboard/billing')
+
+        if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' })
+
+        const existingUser = await db.user.findFirst({
+            where: {
+                id: userId,
+            },
+        })
+
+        if (!existingUser) throw new TRPCError({ code: 'UNAUTHORIZED' })
+
+        const subscriptionPlan = await getUserSubscriptionPlan()
+
+        if (subscriptionPlan.isCanceled && existingUser.stripeCustomerId) {
+            const stripeSession = await stripe.billingPortal.sessions.create({
+                customer: existingUser.stripeCustomerId,
+                return_url: billingUrl,
+            })
+
+            return { url: stripeSession.url }
+        }
+
+        const stripeSession = await stripe.checkout.sessions.create({
+            success_url: billingUrl,
+            cancel_url: billingUrl,
+            payment_method_types: ['card'],
+            mode: 'subscription',
+            billing_address_collection: 'auto',
+            line_items: [
+                {
+                    price: PLANS.find(plan => plan.name === 'Pro')?.price
+                        .priceIds.test,
+                    quantity: 1,
+                },
+            ],
+            metadata: {
+                userId: userId,
+            },
+        })
+
+        return { url: stripeSession.url }
+    }),
 })
 
 export type AppRouter = typeof appRouter
