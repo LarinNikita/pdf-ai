@@ -1,20 +1,23 @@
-import { getUserSubscriptionPlan } from '@/lib/stripe'
 import React from 'react'
+
+import Link from 'next/link'
+import Image from 'next/image'
+import { Gem } from 'lucide-react'
+import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components'
+
+import { getUserSubscriptionPlan } from '@/lib/stripe'
+
+import { Icons } from './Icons'
+
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import Image from 'next/image'
-import { Icons } from './Icons'
-import Link from 'next/link'
-import { Gem } from 'lucide-react'
-import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components'
 
 interface UserAccountNavProps {
     email: string | undefined
