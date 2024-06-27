@@ -25,7 +25,7 @@ const Navbar = async () => {
                 <div className="flex h-14 items-center justify-between border-b border-zinc-200">
                     <Link href="/" className="z-40 flex">
                         <Image
-                            src="/logo.png"
+                            src="/favicon.ico"
                             alt="logo"
                             width={24}
                             height={24}
